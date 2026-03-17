@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Gamedev Canvas Workshop</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="pictures/icon1.ico">
+    
+  </head>
+      <body>
+
+      <div class="toolbar">
+        <label>Pick a color</label>
+        <input type="color" id="color-pick-input">
+        <ul id="color-list" class="color-list"></ul>
+
+        <label>Line width</label>
+        <input type="range" id="line-width-input" min="1" max="40">
+
+        <ul id="tools-list" class="tools-list"></ul>
+
+        <button id="addBlue">Blue</button>
+        <button id="addRed">Red</button>
+        <button id="addCone">Cone</button>
+        <button id="clear-btn">Clear</button>
+        <button id="save-btn">Save</button>
+        <button id ="menu" onclick="">
+        <img src="icons/menu.png" class="nav-icon">
+        </button>
+        <div class="dropdown">Mouse over me!
+          <div class="dropdown-content">Hello World!</div>
+        </div>
+      </div>
+
+      <div class="main-layout">
+        <div class="field">
+            <canvas id="myCanvas" width="1000" height="600"></canvas>
+            <img id="ball" src="pictures/balll.png" alt="ball" style="width: 25px;height: 25px;">
+        </div>
+
+        <textarea id="coachComment" placeholder="comments..."></textarea>
+      </div>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+
