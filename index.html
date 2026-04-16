@@ -10,26 +10,67 @@
       <body>
 
       <div class="toolbar">
-        <label>Pick a color</label>
-        <input type="color" id="color-pick-input">
-        <ul id="color-list" class="color-list"></ul>
 
-        <label>Line width</label>
-        <input type="range" id="line-width-input" min="1" max="40">
+        <!-- 1st row -->
+        <div class="toolbar-row top-row">
+          <label>Pick a color</label>
+          <input type="color" id="color-pick-input">
+          <ul id="color-list" class="color-list"></ul>
 
-        <ul id="tools-list" class="tools-list"></ul>
+          <label>Line width</label>
+          <input type="range" id="line-width-input" min="1" max="40">
+          <ul id="tools-list" class="tools-list"></ul>
 
-        <button id="addBlue">Blue</button>
-        <button id="addRed">Red</button>
-        <button id="addCone">Cone</button>
-        <button id="clear-btn">Clear</button>
-        <button id="save-btn">Save</button>
-        <button id ="menu" onclick="">
-        <img src="icons/menu.png" class="nav-icon">
-        </button>
-        <div class="dropdown">Mouse over me!
-          <div class="dropdown-content">Hello World!</div>
+        <div class="container">
+          <button class="button" type="button" aria-expanded="false" aria-controls="list">
+            menu
+          </button>
+
+          <ul class="menu" id="list" aria-hidden="true">
+
+            <li class="menu-item">
+              <a href="singUpPage.html" class="menu-link" tabindex="-1">sign up</a>
+            </li> 
+
+            <li class="menu-item"> 
+              <a href="loginPage.html" class="menu-link" tabindex="-1">log in</a> 
+            </li> 
+
+            <li class="menu-item"> 
+              <a href="trainings.html" class="menu-link">trainings</a> 
+            </li>
+            
+          </ul>
         </div>
+        </div>
+
+        <!-- 2nd row -->
+        <div class="toolbar-row bottom-row">
+
+          <button id="addBlue">Blue</button>
+          <button id="addRed">Red</button>
+          <button id="addCone">Cone</button>
+          <button id="clear-btn">Clear</button>
+          <button id="save-btn">Save</button>
+
+          <div class="training-form">
+            <input id="trainingName" placeholder="Training name">
+            <input id="trainingAge" placeholder="Age group (e.g., U10)">
+            <input id="trainingType" placeholder="Type (e.g., attack)">
+            <!-- <br>
+            <select id="trainingAge">
+              <option value="U10">10</option>
+              <option value="U12">12</option>
+            </select>
+            <br>
+            <select id="trainingType">
+              <option value="attack">attack</option>
+              <option value="defense">defense</option>
+              <option value="1v1">1v1</option>
+            </select> -->
+          </div>
+        </div>
+
       </div>
 
       <div class="main-layout">
@@ -39,9 +80,10 @@
         </div>
 
         <textarea id="coachComment" placeholder="comments..."></textarea>
+
       </div>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="script.js"></script>
+    <script src="menu.js"></script>
   </body>
 </html>
-

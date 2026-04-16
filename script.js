@@ -40,48 +40,76 @@ function drawArrow(fromX, fromY, toX, toY, dashed = false, wavy = false) {
   ctx.lineWidth = lineWidth;
   ctx.strokeStyle = currentColor;
 
-  if (dashed) ctx.setLineDash([10, 10]);
-  else ctx.setLineDash([]);
+  if (dashed) {
+    const dash = 5 + lineWidth * 2;
+    ctx.setLineDash([dash, dash * 1.5]);
+  } else {
+    ctx.setLineDash([]);
+  }
+
+  let endX = toX;
+  let endY = toY;
 
   if (wavy) {
     const amplitude = 10;
     const wavelength = 50;
+
     const dx = toX - fromX;
     const dy = toY - fromY;
     const distance = Math.hypot(dx, dy);
     const angle = Math.atan2(dy, dx);
 
-    for (let i = 0; i < distance; i++) {
+    let lastX = fromX;
+    let lastY = fromY;
+
+    const headLength = 15 + lineWidth * 2 ;
+
+    for (let i = 0; i < distance - headLength; i++) {
       const x = fromX + Math.cos(angle) * i;
       const y = fromY + Math.sin(angle) * i +
         Math.sin(i / wavelength * Math.PI * 2) * amplitude;
 
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
+
+      lastX = x;
+      lastY = y;
     }
+
+    endX = lastX;
+    endY = lastY;
   } else {
+    const angle = Math.atan2(toY - fromY, toX - fromX);
+    const headLength = 5 + lineWidth * 2;
+
+    const lineEndX = toX - headLength * Math.cos(angle);
+    const lineEndY = toY - headLength * Math.sin(angle);
+
     ctx.moveTo(fromX, fromY);
-    ctx.lineTo(toX, toY);
+    ctx.lineTo(lineEndX, lineEndY);
   }
 
   ctx.stroke();
   ctx.setLineDash([]);
 
-  //наконечник
-  const headLength = 15;
-  const angle = Math.atan2(toY - fromY, toX - fromX);
+  // \arrow end head
+  const headLength = 5 + lineWidth * 2;
+  const angle = Math.atan2(endY - fromY, endX - fromX);
 
   ctx.beginPath();
-  ctx.moveTo(toX, toY);
+  ctx.moveTo(endX, endY);
+
   ctx.lineTo(
-    toX - headLength * Math.cos(angle - Math.PI / 6),
-    toY - headLength * Math.sin(angle - Math.PI / 6)
+    endX - headLength * Math.cos(angle - Math.PI / 6),
+    endY - headLength * Math.sin(angle - Math.PI / 6)
   );
+
   ctx.lineTo(
-    toX - headLength * Math.cos(angle + Math.PI / 6),
-    toY - headLength * Math.sin(angle + Math.PI / 6)
+    endX - headLength * Math.cos(angle + Math.PI / 6),
+    endY - headLength * Math.sin(angle + Math.PI / 6)
   );
-  ctx.lineTo(toX, toY);
+
+  ctx.closePath();
   ctx.fillStyle = currentColor;
   ctx.fill();
 }
@@ -182,44 +210,39 @@ function saveDrawing() {
 
   const field = document.querySelector(".field");
 
-  const comment = document.getElementById("coachComment").value;
+  html2canvas(field, {
+  useCORS: true,
+  backgroundColor: null
+}).then(canvas => {
 
-  html2canvas(field).then(canvasImage => {
+    const image = canvas.toDataURL("image/png");
 
-    const image = canvasImage.toDataURL("image/png");
+    const data = {
+      image: image,
+      comment: document.getElementById("coachComment").value,
+      name: document.getElementById("trainingName").value,
+      age: document.getElementById("trainingAge").value,
+      type: document.getElementById("trainingType").value
+    };
 
     fetch("save.php", {
-
       method: "POST",
-
+      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-        image: image,
-        comment: comment
-      })
-
+      }
     })
-
-    .then(response => response.blob())
-
+    .then(res => res.blob())
     .then(blob => {
-
       const url = window.URL.createObjectURL(blob);
 
       const a = document.createElement("a");
-
       a.href = url;
       a.download = "training-plan.pdf";
-
       a.click();
-
     });
 
   });
-
 }
 
 function createElement(name, text = null, classes = [], listeners = []) {

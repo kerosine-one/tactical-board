@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trainings</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="pictures/icon1.ico">
+</head>
+    <body>
+        <div class="toolbar">
+            <div class="filters">
+                <input id="search" placeholder="Search...">
+
+                <select id="type">
+                    <option value="">All types</option>
+                    <option value="attack">Attack</option>
+                    <option value="defense">Defense</option>
+                    <option value="1v1">1v1</option>
+                </select>
+
+                <select id="age">
+                    <option value="">All ages</option>
+                    <option value="U10">U10</option>
+                    <option value="U12">U12</option>
+                </select>
+
+                <button onclick="loadTrainings()">Filter</button>
+            </div>
+
+            <div class="container">
+
+            <button class="button" type="button" aria-expanded="false" aria-controls="list">
+                menu
+            </button>
+
+          <ul class="menu" id="menuList" aria-hidden="true">
+            <li class="menu-item">
+              <a href="singUpPage.html" class="menu-link" tabindex="-1">sign in</a>
+            </li>
+            <li class="menu-item">
+              <a href="loginPage.html" class="menu-link" tabindex="-1">log in</a>
+            </li>
+            <li class="menu-item">
+              <a href="index.html" class="menu-link" tabindex="-1">main page</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+        <h1>Trainings</h1>
+
+        <div id="list" class="trainings-container"></div>
+        <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+        <script src="trainings.js"></script>
+        <script src="menu.js"></script>
+
+    </body>
+</html>
